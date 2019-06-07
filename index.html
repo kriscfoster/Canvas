@@ -1,29 +1,31 @@
 <html>
   <body style="background-color: black">
-    <canvas></canvas>
+    <canvas/>
     <script>
-      let drawing, prevX, currX, prevY, currY;
-      let color = 'white'
+      let isDrawing, prevX, prevY, currX, currY;
+      let paintColor = 'white'
       const canvas = document.querySelector('canvas');
       const ctx = canvas.getContext('2d');
+      
       canvas.width = document.body.offsetWidth;
       canvas.height = document.body.offsetHeight;
       canvas.addEventListener('mousemove', mouseMoveHandler);
       canvas.addEventListener('mousedown', mouseDownHandler);
-      canvas.addEventListener('mouseup', () => drawing = false);
-      canvas.addEventListener('mouseout', () => drawing = false);
+      canvas.addEventListener('mouseup', () => isDrawing = false);
+      canvas.addEventListener('mouseout', () => isDrawing = false);
+      
       document.addEventListener('keydown', (e) => {
         if (e.key === 'w') {
-          color = 'white';
+          paintColor = 'white';
         } else if (e.key === 'y') {
-          color = 'yellow';
+          paintColor = 'yellow';
         } else if (e.key === 'b') {
-          color = 'blue';
+          paintColor = 'blue';
         }
       });
 
       function mouseMoveHandler(e) {
-        if (drawing) {
+        if (isDrawing) {
           prevX = currX;
           prevY = currY;
           currX = e.clientX - canvas.offsetLeft;
@@ -33,7 +35,7 @@
       }
 
       function mouseDownHandler(e) {
-        drawing = true;
+        isDrawing = true;
         prevX = currX;
         prevY = currY;
         currX = e.clientX - canvas.offsetLeft;
@@ -44,67 +46,11 @@
         ctx.beginPath();
         ctx.moveTo(prevX, prevY);
         ctx.lineTo(currX, currY);
-        ctx.strokeStyle = color;
+        ctx.strokeStyle = paintColor;
         ctx.lineWidth = 5;
         ctx.stroke();
         ctx.closePath();
       }
     </script>
-  
-<script id="jsbin-source-html" type="text/html"> <html>
-  <body style="background-color: black">
-    <canvas></canvas>
-    <script>
-      let drawing, prevX, currX, prevY, currY;
-      let color = 'white'
-      const canvas = document.querySelector('canvas');
-      const ctx = canvas.getContext('2d');
-      canvas.width = document.body.offsetWidth;
-      canvas.height = document.body.offsetHeight;
-      canvas.addEventListener('mousemove', mouseMoveHandler);
-      canvas.addEventListener('mousedown', mouseDownHandler);
-      canvas.addEventListener('mouseup', () => drawing = false);
-      canvas.addEventListener('mouseout', () => drawing = false);
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'w') {
-          color = 'white';
-        } else if (e.key === 'y') {
-          color = 'yellow';
-        } else if (e.key === 'b') {
-          color = 'blue';
-        }
-      });
-
-      function mouseMoveHandler(e) {
-        if (drawing) {
-          prevX = currX;
-          prevY = currY;
-          currX = e.clientX - canvas.offsetLeft;
-          currY = e.clientY - canvas.offsetTop;
-          draw();
-        } 
-      }
-
-      function mouseDownHandler(e) {
-        drawing = true;
-        prevX = currX;
-        prevY = currY;
-        currX = e.clientX - canvas.offsetLeft;
-        currY = e.clientY - canvas.offsetTop;
-      }
-
-      function draw() {
-        ctx.beginPath();
-        ctx.moveTo(prevX, prevY);
-        ctx.lineTo(currX, currY);
-        ctx.strokeStyle = color;
-        ctx.lineWidth = 5;
-        ctx.stroke();
-        ctx.closePath();
-      }
-    <\/script>
   </body>
-</html></script>
-
-</body>
 </html>
